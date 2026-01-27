@@ -1,142 +1,148 @@
-/* --- 1. Fonctions Globales pour le Flip --- */
-/* On utilise "window.nomDeLaFonction" pour être sûr que le HTML (onclick) puisse les voir */
-
+/* --- 1. Fonctions Globales pour le Flip (Cartes Projets) --- */
 window.flipCard = function(btn) {
     const cardInner = btn.closest(".card-inner");
-    if (cardInner) {
-        cardInner.classList.add("is-flipped");
-    }
+    if (cardInner) cardInner.classList.add("is-flipped");
 };
-
 window.unflipCard = function(btn) {
     const cardInner = btn.closest(".card-inner");
-    if (cardInner) {
-        cardInner.classList.remove("is-flipped");
-    }
+    if (cardInner) cardInner.classList.remove("is-flipped");
 };
 
 /* --- 2. Chargement du DOM --- */
 document.addEventListener("DOMContentLoaded", () => {
-    
-    console.log("Portfolio chargé et JS actif.");
+    console.log("--> Portfolio chargé. Interactions actives.");
 
-    /* --- A. Gestion des Filtres --- */
-    const filterBtns = document.querySelectorAll(".filter-btn");
     const projectCards = document.querySelectorAll(".project-card");
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    const dynamicFilterContainer = document.getElementById("dynamic-filter-container");
 
-    if (filterBtns.length > 0) {
-        filterBtns.forEach(btn => {
-            btn.addEventListener("click", () => {
-                // 1. Gérer le style du bouton actif
-                filterBtns.forEach(b => b.classList.remove("active"));
-                btn.classList.add("active");
+    // --- GESTION DU TUTORIEL (Onboarding) ---
+    const tutorialOverlay = document.getElementById("tutorial-overlay");
+    const closeTutorialBtn = document.getElementById("close-tutorial");
+    
+    // Vérification : est-ce que l'utilisateur l'a déjà fermé ?
+    const tutorialSeen = localStorage.getItem("portfolio_tutorial_seen");
 
-                // 2. Récupérer le filtre cliqué
-                const filterValue = btn.getAttribute("data-filter");
-                console.log("Filtre :", filterValue);
 
-                // 3. Trier les cartes
-                projectCards.forEach(card => {
-                    const category = card.getAttribute("data-category");
-
-                    if (filterValue === "all" || category === filterValue) {
-                        card.classList.remove("hide");
-                        card.classList.add("show");
-                    } else {
-                        card.classList.remove("show");
-                        card.classList.add("hide");
-                    }
-                });
-            });
+    // Clic sur le bouton "C'est compris"
+    if (closeTutorialBtn && tutorialOverlay) {
+        closeTutorialBtn.addEventListener("click", () => {
+            tutorialOverlay.classList.remove("visible");
+            localStorage.setItem("portfolio_tutorial_seen", "true");
         });
     }
 
-    /* --- B. Intersection Observer (Animation d'apparition) --- */
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-                // On arrête d'observer une fois apparu pour économiser des ressources
-                observer.unobserve(entry.target);
+    // --- NOUVEAU : Afficher le tutoriel au survol des GROSSES CARTES ---
+    // Cible : .skill-card (Les blocs Frontend, Backend, DevOps)
+    document.querySelectorAll('.skill-card').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            // ON AJOUTE CETTE CONDITION DE SÉCURITÉ :
+            // On affiche SEULEMENT si l'utilisateur n'a pas encore dit "C'est compris"
+            const isSeen = localStorage.getItem("portfolio_tutorial_seen");
+            
+            if (!isSeen && tutorialOverlay) {
+                tutorialOverlay.classList.add("visible");
             }
         });
-    }, { threshold: 0.1 });
 
-    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-
-    /* --- C. Smooth Scroll pour la navigation --- */
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const target = document.querySelector(targetId);
-            if(target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        });
+    
     });
 
-    /* --- D. Tooltip Interactif pour les Compétences (NOUVEAU) --- */
     
-    // 1. Créer l'élément tooltip unique dans le DOM
+
+    // --- FILTRAGE DES PROJETS ---
+    function filterProjects(filterValue, customLabel = null) {
+        projectCards.forEach(card => {
+            const cardTechs = card.getAttribute("data-techs"); 
+            if (filterValue === "all" || (cardTechs && cardTechs.includes(filterValue))) {
+                card.classList.remove("hide"); card.classList.add("show");
+            } else {
+                card.classList.remove("show"); card.classList.add("hide");
+            }
+        });
+
+        filterBtns.forEach(btn => btn.classList.remove("active"));
+        let standardBtnFound = false;
+        filterBtns.forEach(btn => {
+            if(btn.getAttribute("data-filter") === filterValue) {
+                btn.classList.add("active");
+                standardBtnFound = true;
+            }
+        });
+
+        if (dynamicFilterContainer) {
+            if (!standardBtnFound && customLabel && filterValue !== "all") {
+                dynamicFilterContainer.innerHTML = `<button class="filter-btn active dynamic-badge">Filtre : ${customLabel} <i class="fa-solid fa-check"></i></button>`;
+            } else {
+                dynamicFilterContainer.innerHTML = "";
+            }
+        }
+    }
+
+    filterBtns.forEach(btn => btn.addEventListener("click", () => filterProjects(btn.getAttribute("data-filter"))));
+
+    // --- TOOLTIP SUR LES TAGS (Les petites pilules HTML, CSS...) ---
+    // Création de la bulle noire
     const tooltip = document.createElement('div');
     tooltip.className = 'custom-tooltip';
     document.body.appendChild(tooltip);
+    let closeTimer = null;
 
-    let activeTag = null; // Pour savoir quel tag est ouvert
+    function showTooltip(tag) {
+        if (closeTimer) clearTimeout(closeTimer);
+        const desc = tag.getAttribute('data-desc');
+        if (!desc) return; // Si pas de description, on ne fait rien
 
-    // 2. Fonction pour gérer le clic sur les tags
+        const techFilter = tag.getAttribute('data-tech-filter');
+        const techLabel = tag.textContent.trim();
+        
+        let htmlContent = `<span>${desc}</span>`;
+        if (techFilter) {
+            htmlContent += `<br><span class="tooltip-action" data-go-filter="${techFilter}" data-label="${techLabel}">Voir les projets <i class="fa-solid fa-arrow-right"></i></span>`;
+        }
+
+        tooltip.innerHTML = htmlContent;
+        
+        // Calcul de position
+        const rect = tag.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+        const top = rect.top + window.scrollY - tooltipRect.height - 10;
+        const left = rect.left + window.scrollX + (rect.width / 2) - (tooltipRect.width / 2);
+        
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+        tooltip.classList.add('visible');
+
+        // Gestion du clic sur "Voir les projets"
+        const actionBtn = tooltip.querySelector('.tooltip-action');
+        if(actionBtn) {
+            actionBtn.addEventListener('click', (evt) => {
+                evt.stopPropagation();
+                tooltip.classList.remove('visible');
+                document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                setTimeout(() => filterProjects(actionBtn.getAttribute("data-go-filter"), actionBtn.getAttribute("data-label")), 500);
+            });
+        }
+    }
+
+    // Cible : .skill-tag (Les petites pilules)
     document.querySelectorAll('.skill-tag').forEach(tag => {
-        tag.addEventListener('click', (e) => {
-            e.stopPropagation(); // Empêche le clic de fermer immédiatement la bulle
-
-            const desc = tag.getAttribute('data-desc');
-            
-            // Si pas de description, on ne fait rien
-            if (!desc) return;
-
-            // Si on clique sur le même tag, on ferme
-            if (activeTag === tag) {
-                hideTooltip();
-                return;
-            }
-
-            // Mise à jour du contenu et affichage
-            tooltip.textContent = desc;
-            positionTooltip(tag);
-            tooltip.classList.add('visible');
-            activeTag = tag;
+        tag.addEventListener('mouseenter', () => showTooltip(tag));
+        tag.addEventListener('mouseleave', () => { 
+            // Petit délai pour laisser le temps d'aller dans la bulle
+            closeTimer = setTimeout(() => tooltip.classList.remove('visible'), 300); 
         });
     });
 
-    // 3. Fermer la bulle si on clique n'importe où ailleurs
-    document.addEventListener('click', () => {
-        if (activeTag) {
-            hideTooltip();
-        }
-    });
+    // Empêcher la fermeture si on survole la bulle elle-même
+    tooltip.addEventListener('mouseenter', () => { if (closeTimer) clearTimeout(closeTimer); });
+    tooltip.addEventListener('mouseleave', () => { tooltip.classList.remove('visible'); });
 
-    // 4. Fonction pour cacher la bulle
-    function hideTooltip() {
-        tooltip.classList.remove('visible');
-        activeTag = null;
-    }
-
-    // 5. Fonction mathématique pour placer la bulle au-dessus du tag
-    function positionTooltip(element) {
-        const rect = element.getBoundingClientRect();
-        const tooltipRect = tooltip.getBoundingClientRect();
-
-        // Calculs pour centrer au-dessus
-        const top = rect.top + window.scrollY - tooltipRect.height - 10; // 10px plus haut
-        const left = rect.left + window.scrollX + (rect.width / 2) - (tooltipRect.width / 2);
-
-        tooltip.style.top = `${top}px`;
-        tooltip.style.left = `${left}px`;
-    }
-    
-    // Fermer aussi au scroll pour éviter les bugs visuels
-    window.addEventListener('scroll', () => {
-        if(activeTag) hideTooltip();
-    });
+    // --- ANIMATION D'APPARITION AU SCROLL ---
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) { entry.target.classList.add("active"); observer.unobserve(entry.target); }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 });

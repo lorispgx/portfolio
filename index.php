@@ -26,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <nav class="glass-nav">
         <div class="logo">
-        <img src="logo.png" alt="Logo Portfolio" class="logo-img">
-        <span>PORTFOLIO.</span>
-    </div>
+            <img src="logo.png" alt="Logo Portfolio" class="logo-img">
+            <span>PORTFOLIO.</span>
+        </div>
         <ul class="nav-links">
             <li><a href="#hero">Accueil</a></li>
             <li><a href="#about">À propos</a></li>
@@ -60,8 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="about-grid">
                 <div class="about-image reveal">
                     <div class="image-wrapper">
-     <img src="photoprofil.jpg" alt="Photo de profil" class="placeholder-img">
-</div>
+                        <img src="photoprofil.jpg" alt="Photo de profil" class="placeholder-img">
+                    </div>
                 </div>
                  <div class="about-text reveal delay-200">
                     <h2>À propos</h2>
@@ -81,98 +81,80 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 <div class="skill-card reveal" style="--accent-glow: #00f2ea;">
                     <div class="card-header">
-                        <div class="icon-box">
-                            <i class="fa-solid fa-layer-group"></i>
-                        </div>
+                        <div class="icon-box"><i class="fa-solid fa-layer-group"></i></div>
                         <h3>Frontend & UI</h3>
                     </div>
                     <p>Conception d'interfaces fluides, réactives et esthétiques.</p>
                     
                     <div class="skill-tags">
-    <span class="skill-tag" data-desc="Langage de balisage standard pour structurer le contenu des pages web.">
-        <i class="fa-brands fa-html5"></i> HTML5
-    </span>
-    
-    <span class="skill-tag" data-desc="Langage de style pour la mise en forme, le design et les animations.">
-        <i class="fa-brands fa-css3-alt"></i> CSS3
-    </span>
-    
-    <span class="skill-tag" data-desc="Langage de programmation rendant les pages web interactives et dynamiques.">
-        <i class="fa-brands fa-js"></i> JavaScript
-    </span>
-    
-    <span class="skill-tag" data-desc="Outil de design collaboratif pour créer des maquettes et prototypes UI/UX.">
-        <i class="fa-brands fa-figma"></i> Figma
-    </span>
-    
-    <span class="skill-tag" data-desc="Technique de conception assurant l'adaptation du site sur mobile, tablette et PC.">
-        <i class="fa-solid fa-mobile-screen"></i> Responsive
-    </span>
-</div>
+                        <span class="skill-tag" data-desc="Langage de balisage standard." data-tech-filter="html">
+                            <i class="fa-brands fa-html5"></i> HTML5
+                        </span>
+                        <span class="skill-tag" data-desc="Langage de style pour la mise en forme." data-tech-filter="css">
+                            <i class="fa-brands fa-css3-alt"></i> CSS3
+                        </span>
+                        <span class="skill-tag" data-desc="Langage rendant les pages interactives." data-tech-filter="js">
+                            <i class="fa-brands fa-js"></i> JavaScript
+                        </span>
+                        <span class="skill-tag" data-desc="Outil de design collaboratif." data-tech-filter="figma">
+                            <i class="fa-brands fa-figma"></i> Figma
+                        </span>
+                        <span class="skill-tag" data-desc="Adaptation mobile/tablette.">
+                            <i class="fa-solid fa-mobile-screen"></i> Responsive
+                        </span>
+                    </div>
                 </div>
 
                 <div class="skill-card reveal delay-100" style="--accent-glow: #a855f7;">
                     <div class="card-header">
-                        <div class="icon-box">
-                            <i class="fa-solid fa-server"></i>
-                        </div>
+                        <div class="icon-box"><i class="fa-solid fa-server"></i></div>
                         <h3>Backend & Data</h3>
                     </div>
                     <p>Architecture robuste et gestion sécurisée des données.</p>
                     
                     <div class="skill-tags">
-    <span class="skill-tag" data-desc="Langage côté serveur puissant pour générer des pages dynamiques.">
-        <i class="fa-brands fa-php"></i> PHP
-    </span>
-    
-    <span class="skill-tag" data-desc="Système de gestion de base de données relationnelle pour stocker l'information.">
-        <i class="fa-solid fa-database"></i> MySQL
-    </span>
-    
-    <span class="skill-tag" data-desc="Langage polyvalent idéal pour l'algorithmique, la data science et l'automatisation.">
-        <i class="fa-brands fa-python"></i> Python
-    </span>
-    
-    <span class="skill-tag" data-desc="Architecture permettant la communication standardisée entre le client et le serveur.">
-        <i class="fa-solid fa-network-wired"></i> API REST
-    </span>
-    
-    <span class="skill-tag" data-desc="Pattern d'architecture séparant les Données (M), l'Interface (V) et la Logique (C).">
-        <i class="fa-solid fa-sitemap"></i> MVC
-    </span>
-</div>
+                        <span class="skill-tag" data-desc="Langage serveur puissant." data-tech-filter="php">
+                            <i class="fa-brands fa-php"></i> PHP
+                        </span>
+                        <span class="skill-tag" data-desc="Gestion de base de données." data-tech-filter="mysql">
+                            <i class="fa-solid fa-database"></i> MySQL
+                        </span>
+                        <span class="skill-tag" data-desc="Langage idéal pour l'algorithmique." data-tech-filter="python">
+                            <i class="fa-brands fa-python"></i> Python
+                        </span>
+                        <span class="skill-tag" data-desc="Communication client-serveur." data-tech-filter="api">
+                            <i class="fa-solid fa-network-wired"></i> API REST
+                        </span>
+                        <span class="skill-tag" data-desc="Architecture Modèle-Vue-Contrôleur." data-tech-filter="mvc">
+                            <i class="fa-solid fa-sitemap"></i> MVC
+                        </span>
+                    </div>
                 </div>
 
                 <div class="skill-card reveal delay-200" style="--accent-glow: #22c55e;">
                     <div class="card-header">
-                        <div class="icon-box">
-                            <i class="fa-solid fa-code-branch"></i>
-                        </div>
+                        <div class="icon-box"><i class="fa-solid fa-code-branch"></i></div>
                         <h3>DevOps & Outils</h3>
                     </div>
                     <p>Optimisation du workflow et travail collaboratif.</p>
                     
                    <div class="skill-tags">
-    <span class="skill-tag" data-desc="Système de contrôle de version pour suivre l'historique et les modifications du code.">
-        <i class="fa-brands fa-git-alt"></i> Git
-    </span>
-    
-    <span class="skill-tag" data-desc="Plateforme d'hébergement de code facilitant la collaboration et le partage.">
-        <i class="fa-brands fa-github"></i> GitHub
-    </span>
-    
-    <span class="skill-tag" data-desc="Outil de conteneurisation pour déployer des applications dans des environnements isolés.">
-        <i class="fa-brands fa-docker"></i> Docker
-    </span>
-    
-    <span class="skill-tag" data-desc="Méthodologie de gestion de projet itérative et flexible.">
-        <i class="fa-solid fa-list-check"></i> Agile / Scrum
-    </span>
-    
-    <span class="skill-tag" data-desc="Interface en ligne de commande pour interagir directement avec le système.">
-        <i class="fa-solid fa-terminal"></i> Terminal
-    </span>
-</div>
+                        <span class="skill-tag" data-desc="Système de contrôle de version.">
+                            <i class="fa-brands fa-git-alt"></i> Git
+                        </span>
+                        <span class="skill-tag" data-desc="Plateforme d'hébergement de code.">
+                            <i class="fa-brands fa-github"></i> GitHub
+                        </span>
+                        <span class="skill-tag" data-desc="Outil de conteneurisation.">
+                            <i class="fa-brands fa-docker"></i> Docker
+                        </span>
+                        <span class="skill-tag" data-desc="Méthodologie de gestion de projet.">
+                            <i class="fa-solid fa-list-check"></i> Agile
+                        </span>
+                        <span class="skill-tag" data-desc="Ligne de commande." data-tech-filter="terminal">
+                            <i class="fa-solid fa-terminal"></i> Terminal
+                        </span>
+                    </div>
                 </div>
 
             </div>
@@ -188,13 +170,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button class="filter-btn" data-filter="java">Java / JavaFX</button>
                 <button class="filter-btn" data-filter="js">JavaScript / Web</button>
                 <button class="filter-btn" data-filter="python">Python / Algo</button>
+                <span id="dynamic-filter-container"></span>
             </div>
             
             <div class="projects-grid">
                 
-                <article class="project-card reveal" data-category="java">
+                <article class="project-card reveal" data-category="java" data-techs="java javafx mysql mvc">
                     <div class="card-inner">
-                        
                         <div class="card-front">
                             <div class="card-image">
                                  <img src="gestionlocative.jpg" alt="App Gestion Location" class="placeholder-img">
@@ -210,14 +192,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <p class="project-summary">
                                 Application desktop développée pour un projet au sein de l'IUT. Elle permet la gestion complète du CRUD (Clients, Biens, Contrats).
                             </p>
-                            
                             <div class="tech-stack">
                                 <span class="tech-badge">Java</span>
                                 <span class="tech-badge">JavaFX</span>
                                 <span class="tech-badge">MySQL</span>
-                                <span class="tech-badge">MVC Pattern</span>
+                                <span class="tech-badge">MVC</span>
                             </div>
-
                             <div class="back-actions">
                                 <button class="btn-return" onclick="unflipCard(this)" aria-label="Retour">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 1 1 0 8h-1"/></svg>
@@ -231,7 +211,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </article>
 
-                <article class="project-card reveal delay-100" data-category="js">
+                <article class="project-card reveal delay-100" data-category="js" data-techs="js javascript php html css api json chartjs">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="card-image">
@@ -245,11 +225,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="card-back">
                             <h4 class="back-title">Détails du projet</h4>
                             <p class="project-summary">
-                                Interface web interactive connectée. Elle transforme des fichiers JSON bruts en graphiques dynamiques (Bar, Line, Pie) pour faciliter la prise de décision.
+                                Interface web interactive connectée. Elle transforme des fichiers JSON bruts en graphiques dynamiques pour faciliter la prise de décision.
                             </p>
                             <div class="tech-stack">
                                 <span class="tech-badge">PHP</span>
-                                <span class="tech-badge">JavaScript</span>
+                                <span class="tech-badge">JS</span>
                                 <span class="tech-badge">Chart.js</span>
                                 <span class="tech-badge">JSON</span>
                             </div>
@@ -266,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </article>
 
-                <article class="project-card reveal delay-200" data-category="python">
+                <article class="project-card reveal delay-200" data-category="python" data-techs="python algo terminal">
                     <div class="card-inner">
                         <div class="card-front">
                             <div class="card-image">
@@ -366,6 +346,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </section>
 
+    <div id="tutorial-overlay" class="tutorial-card">
+        <div class="tutorial-content">
+            <div class="tutorial-icon">💡</div>
+            <div class="tutorial-text">
+                <h3>Astuce de navigation</h3>
+                <p>Cliquez sur une <strong>compétence</strong> (ex: Java, Docker) pour voir sa définition et <strong>filtrer automatiquement</strong> les projets liés !</p>
+            </div>
+        </div>
+        <button id="close-tutorial" class="tutorial-btn">C'est compris !</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>
