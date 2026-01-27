@@ -19,11 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- GESTION DU TUTORIEL (Onboarding) ---
     const tutorialOverlay = document.getElementById("tutorial-overlay");
     const closeTutorialBtn = document.getElementById("close-tutorial");
+    const skillsSection = document.querySelector("#skills"); // On cible la section compétences
     
-    // Vérification : est-ce que l'utilisateur l'a déjà fermé ?
-    const tutorialSeen = localStorage.getItem("portfolio_tutorial_seen");
-
-
     // Clic sur le bouton "C'est compris"
     if (closeTutorialBtn && tutorialOverlay) {
         closeTutorialBtn.addEventListener("click", () => {
@@ -32,23 +29,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- NOUVEAU : Afficher le tutoriel au survol des GROSSES CARTES ---
-    // Cible : .skill-card (Les blocs Frontend, Backend, DevOps)
+    // --- LOGIQUE HYBRIDE : Souris (Desktop) & Scroll (Mobile/Tous) ---
+    
+    // 1. Desktop : Afficher au survol des cartes (comme avant)
     document.querySelectorAll('.skill-card').forEach(card => {
         card.addEventListener('mouseenter', () => {
-            // ON AJOUTE CETTE CONDITION DE SÉCURITÉ :
-            // On affiche SEULEMENT si l'utilisateur n'a pas encore dit "C'est compris"
             const isSeen = localStorage.getItem("portfolio_tutorial_seen");
-            
             if (!isSeen && tutorialOverlay) {
                 tutorialOverlay.classList.add("visible");
             }
         });
-
-    
+        // Note: J'ai retiré le mouseleave pour éviter que ça clignote trop sur mobile si on touche
+        // L'utilisateur fermera le tuto avec le bouton "C'est compris"
     });
 
-    
+    // 2. Mobile & Desktop : Afficher quand on arrive sur la section Compétences (Scroll)
+    if (skillsSection && tutorialOverlay) {
+        const tutorialObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Si la section compétences est visible à 50%
+                if (entry.isIntersecting) {
+                    const isSeen = localStorage.getItem("portfolio_tutorial_seen");
+                    if (!isSeen) {
+                        tutorialOverlay.classList.add("visible");
+                        // On peut choisir de déconnecter l'observer pour ne pas le spammer
+                        // tutorialObserver.unobserve(entry.target); 
+                    }
+                }
+            });
+        }, { threshold: 0.3 }); // Se déclenche quand 30% de la section est visible
+        
+        tutorialObserver.observe(skillsSection);
+    }
 
     // --- FILTRAGE DES PROJETS ---
     function filterProjects(filterValue, customLabel = null) {
@@ -127,14 +139,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cible : .skill-tag (Les petites pilules)
     document.querySelectorAll('.skill-tag').forEach(tag => {
-        tag.addEventListener('mouseenter', () => showTooltip(tag));
+        // 'click' marche sur Desktop et Mobile (tap)
+        tag.addEventListener('click', (e) => {
+            // Sur mobile, on empêche parfois le comportement par défaut si nécessaire, 
+            // mais ici le click est standard.
+            e.stopPropagation(); // Évite de fermer immédiatement si on clique sur le tag
+            showTooltip(tag);
+        });
+        
+        // Pour Desktop : fermeture au survol sortant
         tag.addEventListener('mouseleave', () => { 
-            // Petit délai pour laisser le temps d'aller dans la bulle
             closeTimer = setTimeout(() => tooltip.classList.remove('visible'), 300); 
         });
     });
 
-    // Empêcher la fermeture si on survole la bulle elle-même
+    // Fermeture du tooltip si on clique ailleurs sur la page (Essentiel pour Mobile)
+    document.addEventListener('click', (e) => {
+        // Si le clic n'est pas sur un tag ni dans le tooltip
+        if (!e.target.closest('.skill-tag') && !e.target.closest('.custom-tooltip')) {
+            tooltip.classList.remove('visible');
+        }
+    });
+
+    // Empêcher la fermeture si on survole la bulle elle-même (Desktop)
     tooltip.addEventListener('mouseenter', () => { if (closeTimer) clearTimeout(closeTimer); });
     tooltip.addEventListener('mouseleave', () => { tooltip.classList.remove('visible'); });
 

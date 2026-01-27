@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Développeur Web & UI Designer</title>
+    <title>Portfolio | Développeur Data </title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                  <div class="about-text reveal delay-200">
-                    <h2>À propos</h2>
+                    <h2>Je m'appelle Loris Pigneaux...</h2>
                     <p>Actuellement en dernière année de formation à l'IUT Paul Sabatier de Toulouse, je me prépare à devenir un développeur polyvalent avec une forte sensibilité pour la data.</p>
                     
                     <p>Ma spécialité AGED (Administration, Gestion et Exploitation des Données) me permet de concevoir des applications robustes tout en maîtrisant le cycle de vie des données, de la base de données à la visualisation utilisateur.</p>
