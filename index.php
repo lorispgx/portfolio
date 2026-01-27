@@ -86,7 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <p>Architecture de données et logique serveur.</p>
                     <ul class="tech-list">
                         <li>PHP / MySQL</li>
-                        <li>API REST</li>
                         <li>Architecture MVC</li>
                     </ul>
                 </div>
@@ -106,53 +105,120 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <section id="projects" class="projects-section">
         <div class="container">
-            <h2 class="section-title reveal">Projets</h2>
+            <h2 class="section-title reveal">Projets & Réalisations</h2>
+            
+            <div class="filter-container reveal">
+                <button class="filter-btn active" data-filter="all">Tous</button>
+                <button class="filter-btn" data-filter="java">Java / JavaFX</button>
+                <button class="filter-btn" data-filter="js">JavaScript / Web</button>
+                <button class="filter-btn" data-filter="python">Python / Algo</button>
+            </div>
             
             <div class="projects-grid">
                 
-                <article class="project-card reveal">
-                    <div class="card-image">
-                         <img src="gestionlocative.jpg" alt="App Gestion Location" class="placeholder-img">
-                    </div>
-                    <div class="card-info">
-                        <h3>Gestion de Location</h3>
-                        <p class="project-desc">Application desktop complète pour gérer les réservations, les clients et le parc immobilier d'une agence.</p>
+                <article class="project-card reveal" data-category="java">
+                    <div class="card-inner">
                         
-                        <div class="project-tags">
-                            <span class="tag">Java</span>
-                            <span class="tag">MySQL</span>
-                            <span class="tag">MVC</span>
+                        <div class="card-front">
+                            <div class="card-image">
+                                 <img src="gestionlocative.jpg" alt="App Gestion Location" class="placeholder-img">
+                            </div>
+                            <div class="front-content">
+                                <h3>Gestion de Location</h3>
+                                <button class="btn-details" onclick="flipCard(this)">Voir le résumé & détails</button>
+                            </div>
+                        </div>
+
+                        <div class="card-back">
+                            <h4 class="back-title">Détails du projet</h4>
+                            <p class="project-summary">
+                                Application desktop lourde développée pour une agence immobilière. Elle permet la gestion complète du CRUD (Clients, Biens, Contrats) et génère des factures PDF automatiques.
+                            </p>
+                            
+                            <div class="tech-stack">
+                                <span class="tech-badge">Java</span>
+                                <span class="tech-badge">JavaFX</span>
+                                <span class="tech-badge">MySQL</span>
+                                <span class="tech-badge">MVC Pattern</span>
+                            </div>
+
+                            <div class="back-actions">
+                                <button class="btn-return" onclick="unflipCard(this)" aria-label="Retour">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 1 1 0 8h-1"/></svg>
+                                </button>
+                                <a href="https://github.com/calatrabav/S3C01" target="_blank" class="github-btn-mini">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                    GitHub
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </article>
 
-                <article class="project-card reveal delay-100">
-                    <div class="card-image">
-                         <img src="dashboarddata.jpg" alt="Dashboard Data" class="placeholder-img">
-                    </div>
-                    <div class="card-info">
-                        <h3>Visualisation de Données</h3>
-                        <p class="project-desc">Site web interactif transformant des jeux de données bruts en graphiques dynamiques et lisibles.</p>
-                        
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">Chart.js</span>
+                <article class="project-card reveal delay-100" data-category="js">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-image">
+                                 <img src="dashboarddata.jpg" alt="Dashboard Data" class="placeholder-img">
+                            </div>
+                            <div class="front-content">
+                                <h3>Visualisation de Données</h3>
+                                <button class="btn-details" onclick="flipCard(this)">Voir le résumé & détails</button>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h4 class="back-title">Détails du projet</h4>
+                            <p class="project-summary">
+                                Interface web interactive connectée. Elle transforme des fichiers JSON bruts en graphiques dynamiques (Bar, Line, Pie) pour faciliter la prise de décision.
+                            </p>
+                            <div class="tech-stack">
+                                <span class="tech-badge">JavaScript</span>
+                                <span class="tech-badge">Chart.js</span>
+                                <span class="tech-badge">JSON</span>
+                            </div>
+                            <div class="back-actions">
+                                <button class="btn-return" onclick="unflipCard(this)" aria-label="Retour">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 1 1 0 8h-1"/></svg>
+                                </button>
+                                <a href="https://github.com/lorispgx/dataview" target="_blank" class="github-btn-mini">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                    GitHub
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </article>
 
-                <article class="project-card reveal delay-200">
-                    <div class="card-image">
-                         <img src="research.jpg" alt="Algorithme Python" class="placeholder-img">
-                    </div>
-                    <div class="card-info">
-                        <h3>Algorithme de Recherche</h3>
-                        <p class="project-desc">Conception et optimisation d'un algorithme de recherche de chemin (pathfinding) performant.</p>
-                        
-                        <div class="project-tags">
-                            <span class="tag">Python</span>
-                            <span class="tag">Algorithmique</span>
-                            <span class="tag">Complexité</span>
+                <article class="project-card reveal delay-200" data-category="python">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-image">
+                                 <img src="research.jpg" alt="Algorithme Python" class="placeholder-img">
+                            </div>
+                            <div class="front-content">
+                                <h3>Algorithme de Recherche</h3>
+                                <button class="btn-details" onclick="flipCard(this)">Voir le résumé & détails</button>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h4 class="back-title">Détails du projet</h4>
+                            <p class="project-summary">
+                                Implémentation de l'algorithme A* (A Star) en Python pour résoudre des problèmes de chemin le plus court dans un graphe complexe. Optimisation de la complexité temporelle.
+                            </p>
+                            <div class="tech-stack">
+                                <span class="tech-badge">Python</span>
+                                <span class="tech-badge">Algorithmique</span>
+                                <span class="tech-badge">Graphes</span>
+                            </div>
+                            <div class="back-actions">
+                                <button class="btn-return" onclick="unflipCard(this)" aria-label="Retour">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14l-4-4 4-4"/><path d="M5 10h11a4 4 0 1 1 0 8h-1"/></svg>
+                                </button>
+                                <a href="https://github.com/lorispgx/searchalogorithm" target="_blank" class="github-btn-mini">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                    GitHub
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </article>
@@ -222,3 +288,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
