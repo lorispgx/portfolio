@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
@@ -72,36 +73,106 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </section>
 
-    <section id="skills" class="skills-section">
+   <section id="skills" class="skills-section">
         <div class="container">
             <h2 class="section-title reveal">Mes Domaines d'Expertise</h2>
+            
             <div class="skills-grid">
                 
-                <div class="skill-card reveal">
-                    <h3>Développement Frontend</h3>
-                    <p>Création d'interfaces réactives et dynamiques.</p>
-                    <ul class="tech-list">
-                        <li>HTML / CSS</li>
-                        <li>JavaScript </li>
-                    </ul>
+                <div class="skill-card reveal" style="--accent-glow: #00f2ea;">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <h3>Frontend & UI</h3>
+                    </div>
+                    <p>Conception d'interfaces fluides, réactives et esthétiques.</p>
+                    
+                    <div class="skill-tags">
+    <span class="skill-tag" data-desc="Langage de balisage standard pour structurer le contenu des pages web.">
+        <i class="fa-brands fa-html5"></i> HTML5
+    </span>
+    
+    <span class="skill-tag" data-desc="Langage de style pour la mise en forme, le design et les animations.">
+        <i class="fa-brands fa-css3-alt"></i> CSS3
+    </span>
+    
+    <span class="skill-tag" data-desc="Langage de programmation rendant les pages web interactives et dynamiques.">
+        <i class="fa-brands fa-js"></i> JavaScript
+    </span>
+    
+    <span class="skill-tag" data-desc="Outil de design collaboratif pour créer des maquettes et prototypes UI/UX.">
+        <i class="fa-brands fa-figma"></i> Figma
+    </span>
+    
+    <span class="skill-tag" data-desc="Technique de conception assurant l'adaptation du site sur mobile, tablette et PC.">
+        <i class="fa-solid fa-mobile-screen"></i> Responsive
+    </span>
+</div>
                 </div>
 
-                <div class="skill-card reveal delay-100">
-                    <h3>Développement Backend</h3>
-                    <p>Architecture de données et logique serveur.</p>
-                    <ul class="tech-list">
-                        <li>PHP / MySQL</li>
-                        <li>Architecture MVC</li>
-                    </ul>
+                <div class="skill-card reveal delay-100" style="--accent-glow: #a855f7;">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <i class="fa-solid fa-server"></i>
+                        </div>
+                        <h3>Backend & Data</h3>
+                    </div>
+                    <p>Architecture robuste et gestion sécurisée des données.</p>
+                    
+                    <div class="skill-tags">
+    <span class="skill-tag" data-desc="Langage côté serveur puissant pour générer des pages dynamiques.">
+        <i class="fa-brands fa-php"></i> PHP
+    </span>
+    
+    <span class="skill-tag" data-desc="Système de gestion de base de données relationnelle pour stocker l'information.">
+        <i class="fa-solid fa-database"></i> MySQL
+    </span>
+    
+    <span class="skill-tag" data-desc="Langage polyvalent idéal pour l'algorithmique, la data science et l'automatisation.">
+        <i class="fa-brands fa-python"></i> Python
+    </span>
+    
+    <span class="skill-tag" data-desc="Architecture permettant la communication standardisée entre le client et le serveur.">
+        <i class="fa-solid fa-network-wired"></i> API REST
+    </span>
+    
+    <span class="skill-tag" data-desc="Pattern d'architecture séparant les Données (M), l'Interface (V) et la Logique (C).">
+        <i class="fa-solid fa-sitemap"></i> MVC
+    </span>
+</div>
                 </div>
 
-                <div class="skill-card reveal delay-200">
-                    <h3>Outils & Gestion</h3>
-                    <p>Maquettage et gestion de version.</p>
-                    <ul class="tech-list">
-                        <li>Git / GitHub</li>
-                        <li>Méthode Agile</li>
-                    </ul>
+                <div class="skill-card reveal delay-200" style="--accent-glow: #22c55e;">
+                    <div class="card-header">
+                        <div class="icon-box">
+                            <i class="fa-solid fa-code-branch"></i>
+                        </div>
+                        <h3>DevOps & Outils</h3>
+                    </div>
+                    <p>Optimisation du workflow et travail collaboratif.</p>
+                    
+                   <div class="skill-tags">
+    <span class="skill-tag" data-desc="Système de contrôle de version pour suivre l'historique et les modifications du code.">
+        <i class="fa-brands fa-git-alt"></i> Git
+    </span>
+    
+    <span class="skill-tag" data-desc="Plateforme d'hébergement de code facilitant la collaboration et le partage.">
+        <i class="fa-brands fa-github"></i> GitHub
+    </span>
+    
+    <span class="skill-tag" data-desc="Outil de conteneurisation pour déployer des applications dans des environnements isolés.">
+        <i class="fa-brands fa-docker"></i> Docker
+    </span>
+    
+    <span class="skill-tag" data-desc="Méthodologie de gestion de projet itérative et flexible.">
+        <i class="fa-solid fa-list-check"></i> Agile / Scrum
+    </span>
+    
+    <span class="skill-tag" data-desc="Interface en ligne de commande pour interagir directement avec le système.">
+        <i class="fa-solid fa-terminal"></i> Terminal
+    </span>
+</div>
                 </div>
 
             </div>

@@ -33,10 +33,11 @@ img.placeholder-img {
 a { text-decoration: none; color: inherit; transition: var(--transition); }
 ul { list-style: none; }
 
+/* --- Navigation --- */
 .glass-nav {
     position: fixed;
     top: 0; left: 0; width: 100%;
-    padding: 1rem 5%; /* Un peu moins de padding vertical pour le logo */
+    padding: 1rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,22 +48,20 @@ ul { list-style: none; }
     z-index: 1000;
 }
 
-/* Le conteneur du logo n'a plus besoin de styles de texte */
 .logo {
-    display: flex;           /* Met l'image et le texte côte à côte */
-    align-items: center;     /* Centre verticalement */
-    gap: 12px;               /* Espace entre l'image et le texte */
-    font-weight: 800;        /* Texte en gras */
-    font-size: 1.4rem;       /* Taille du texte */
-    letter-spacing: -0.5px;  /* Style un peu plus serré */
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 1.4rem;
+    letter-spacing: -0.5px;
 }
 
-/* NOUVEAU : Style pour l'image du logo */
 .logo-img {
-    height: 40px;            /* Taille de l'image un peu ajustée */
+    height: 40px;
     width: auto;
     object-fit: contain;
-    border-radius: 6px;      /* Optionnel : coins arrondis */
+    border-radius: 6px;
     filter: invert(1);       
 }
 
@@ -151,28 +150,111 @@ section { padding: 100px 0; }
     position: relative;
 }
 
-/* --- Skills --- */
+/* --- Skills "Next Gen" --- */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
 }
+
 .skill-card {
-    background: var(--card-bg);
-    padding: 2rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-light);
+    background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+    padding: 2.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
-.skill-card h3 { margin-bottom: 0.5rem; }
-.skill-card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
-.tech-list li {
-    display: inline-block;
+
+.skill-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-glow);
+    box-shadow: 0 10px 40px -10px var(--accent-glow);
+}
+
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+    background: var(--accent-glow);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.skill-card:hover::before {
+    transform: scaleX(1);
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 1rem;
+}
+
+.icon-box {
+    width: 50px; height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    display: flex;
+    align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    color: var(--accent-glow);
+    transition: 0.3s;
+}
+
+.skill-card:hover .icon-box {
+    background: var(--accent-glow);
+    color: #000;
+}
+
+.skill-card h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.skill-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-tag {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 50px;
     font-size: 0.85rem;
     color: var(--text-muted);
-    margin-right: 10px;
-    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+    cursor: default;
 }
-.tech-list li::before { content: "•"; color: var(--accent); margin-right: 5px; }
+
+.skill-tag i {
+    color: var(--accent-glow);
+}
+
+.skill-tag:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-glow);
+    color: var(--text-main);
+    transform: translateY(-2px);
+}
 
 /* --- Filters (Logiciels) --- */
 .filter-container {
@@ -211,7 +293,6 @@ section { padding: 100px 0; }
     perspective: 1000px;
 }
 
-/* --- Flip Card Core --- */
 .project-card {
     background-color: transparent;
     height: 420px;
@@ -246,7 +327,7 @@ section { padding: 100px 0; }
 .card-front { display: flex; flex-direction: column; }
 
 .card-image { 
-    height: 55%; /* Réduit un peu (était 65%) pour laisser de la place au texte */
+    height: 55%;
     width: 100%; 
     overflow: hidden; 
 }
@@ -264,19 +345,18 @@ section { padding: 100px 0; }
     padding: 1.5rem; 
     display: flex; 
     flex-direction: column;
-    justify-content: center; /* Centre le contenu verticalement */
-    height: 45%; /* Agrandit la zone de texte (était 35%) */
+    justify-content: center;
+    height: 45%;
     align-items: center;
-    gap: 1.5rem; /* Ajoute un espace OBLIGATOIRE entre le titre et le bouton */
-    text-align: center; /* Centre le texte si il passe à la ligne */
+    gap: 1.5rem;
+    text-align: center;
 }
 
-/* On retire le margin-top: auto du bouton car le gap et justify-content gèrent l'espace */
 .btn-details {
     background: transparent; 
     border: 1px solid var(--border-light);
     color: var(--text-muted); 
-    padding: 8px 25px; /* Un peu plus large */
+    padding: 8px 25px;
     border-radius: 20px;
     font-size: 0.85rem; 
     cursor: pointer; 
@@ -380,4 +460,59 @@ section { padding: 100px 0; }
     .hero-image { order: -1; height: 300px; }
     .nav-links { display: none; }
     .projects-grid { grid-template-columns: 1fr; }
+}
+
+/* --- Tooltip (Bulle d'info au clic) - AJOUT INDISPENSABLE --- */
+.skill-tag {
+    cursor: pointer; /* Change le curseur en main pour montrer que c'est cliquable */
+    position: relative;
+    transition: 0.3s;
+}
+
+.skill-tag:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* La boîte de la bulle elle-même */
+.custom-tooltip {
+    position: absolute;
+    background: #111; /* Fond noir */
+    color: #fff;      /* Texte blanc */
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    width: 220px;     /* Largeur fixe */
+    z-index: 10000;   /* Très important : doit être au-dessus de tout */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    
+    /* État caché par défaut */
+    opacity: 0;
+    visibility: hidden; 
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    
+    pointer-events: none; /* Empêche la bulle de bloquer les clics */
+    text-align: left;
+}
+
+/* État visible (ajouté par le JS) */
+.custom-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* La petite flèche en bas de la bulle */
+.custom-tooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0;
+    border-style: solid;
+    border-color: #111 transparent transparent transparent;
 }

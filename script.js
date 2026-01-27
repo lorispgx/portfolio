@@ -15,12 +15,12 @@ window.unflipCard = function(btn) {
     }
 };
 
-/* --- 2. Chargement du DOM (Filtres & Scroll) --- */
+/* --- 2. Chargement du DOM --- */
 document.addEventListener("DOMContentLoaded", () => {
     
     console.log("Portfolio chargé et JS actif.");
 
-    /* --- Gestion des Filtres --- */
+    /* --- A. Gestion des Filtres --- */
     const filterBtns = document.querySelectorAll(".filter-btn");
     const projectCards = document.querySelectorAll(".project-card");
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /* --- Intersection Observer (Animation d'apparition) --- */
+    /* --- B. Intersection Observer (Animation d'apparition) --- */
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
-    /* --- Smooth Scroll pour la navigation --- */
+    /* --- C. Smooth Scroll pour la navigation --- */
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -74,5 +74,69 @@ document.addEventListener("DOMContentLoaded", () => {
                 target.scrollIntoView({ behavior: 'smooth' });
             }
         });
+    });
+
+    /* --- D. Tooltip Interactif pour les Compétences (NOUVEAU) --- */
+    
+    // 1. Créer l'élément tooltip unique dans le DOM
+    const tooltip = document.createElement('div');
+    tooltip.className = 'custom-tooltip';
+    document.body.appendChild(tooltip);
+
+    let activeTag = null; // Pour savoir quel tag est ouvert
+
+    // 2. Fonction pour gérer le clic sur les tags
+    document.querySelectorAll('.skill-tag').forEach(tag => {
+        tag.addEventListener('click', (e) => {
+            e.stopPropagation(); // Empêche le clic de fermer immédiatement la bulle
+
+            const desc = tag.getAttribute('data-desc');
+            
+            // Si pas de description, on ne fait rien
+            if (!desc) return;
+
+            // Si on clique sur le même tag, on ferme
+            if (activeTag === tag) {
+                hideTooltip();
+                return;
+            }
+
+            // Mise à jour du contenu et affichage
+            tooltip.textContent = desc;
+            positionTooltip(tag);
+            tooltip.classList.add('visible');
+            activeTag = tag;
+        });
+    });
+
+    // 3. Fermer la bulle si on clique n'importe où ailleurs
+    document.addEventListener('click', () => {
+        if (activeTag) {
+            hideTooltip();
+        }
+    });
+
+    // 4. Fonction pour cacher la bulle
+    function hideTooltip() {
+        tooltip.classList.remove('visible');
+        activeTag = null;
+    }
+
+    // 5. Fonction mathématique pour placer la bulle au-dessus du tag
+    function positionTooltip(element) {
+        const rect = element.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+
+        // Calculs pour centrer au-dessus
+        const top = rect.top + window.scrollY - tooltipRect.height - 10; // 10px plus haut
+        const left = rect.left + window.scrollX + (rect.width / 2) - (tooltipRect.width / 2);
+
+        tooltip.style.top = `${top}px`;
+        tooltip.style.left = `${left}px`;
+    }
+    
+    // Fermer aussi au scroll pour éviter les bugs visuels
+    window.addEventListener('scroll', () => {
+        if(activeTag) hideTooltip();
     });
 });
