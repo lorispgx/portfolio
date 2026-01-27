@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="card-back">
                             <h4 class="back-title">Détails du projet</h4>
                             <p class="project-summary">
-                                Application desktop lourde développée pour une agence immobilière. Elle permet la gestion complète du CRUD (Clients, Biens, Contrats) et génère des factures PDF automatiques.
+                                Application desktop développée pour un projet au sein de l'IUT. Elle permet la gestion complète du CRUD (Clients, Biens, Contrats).
                             </p>
                             
                             <div class="tech-stack">
@@ -203,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="card-back">
                             <h4 class="back-title">Détails du projet</h4>
                             <p class="project-summary">
-                                Implémentation de l'algorithme A* (A Star) en Python pour résoudre des problèmes de chemin le plus court dans un graphe complexe. Optimisation de la complexité temporelle.
+                                Implémentation d'algorithme complexe en Python pour résoudre des problèmes de chemin le plus court dans un graphe.
                             </p>
                             <div class="tech-stack">
                                 <span class="tech-badge">Python</span>
