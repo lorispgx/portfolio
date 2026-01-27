@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <div class="hero-buttons">
                 <a href="#projects" class="btn-primary">Voir mes réalisations</a>
-                <a href="cv.pdf" target="_blank" class="btn-secondary">Télécharger mon CV</a>
+                <a href="Loris Pigneaux.pdf" target="_blank" class="btn-secondary">Télécharger mon CV</a>
             </div>
         </div>
         
@@ -172,6 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 Interface web interactive connectée. Elle transforme des fichiers JSON bruts en graphiques dynamiques (Bar, Line, Pie) pour faciliter la prise de décision.
                             </p>
                             <div class="tech-stack">
+                                <span class="tech-badge">PHP</span>
                                 <span class="tech-badge">JavaScript</span>
                                 <span class="tech-badge">Chart.js</span>
                                 <span class="tech-badge">JSON</span>
