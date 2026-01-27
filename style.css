@@ -33,11 +33,10 @@ img.placeholder-img {
 a { text-decoration: none; color: inherit; transition: var(--transition); }
 ul { list-style: none; }
 
-/* --- Navigation --- */
 .glass-nav {
     position: fixed;
     top: 0; left: 0; width: 100%;
-    padding: 1.2rem 5%;
+    padding: 1rem 5%; /* Un peu moins de padding vertical pour le logo */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,7 +47,24 @@ ul { list-style: none; }
     z-index: 1000;
 }
 
-.logo { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; }
+/* Le conteneur du logo n'a plus besoin de styles de texte */
+.logo {
+    display: flex;           /* Met l'image et le texte côte à côte */
+    align-items: center;     /* Centre verticalement */
+    gap: 12px;               /* Espace entre l'image et le texte */
+    font-weight: 800;        /* Texte en gras */
+    font-size: 1.4rem;       /* Taille du texte */
+    letter-spacing: -0.5px;  /* Style un peu plus serré */
+}
+
+/* NOUVEAU : Style pour l'image du logo */
+.logo-img {
+    height: 40px;            /* Taille de l'image un peu ajustée */
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;      /* Optionnel : coins arrondis */
+    filter: invert(1);       
+}
 
 .nav-links { display: flex; gap: 2rem; align-items: center; }
 .nav-links a { font-size: 0.95rem; font-weight: 500; color: var(--text-muted); }

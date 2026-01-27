@@ -18,11 +18,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="style.css">
+    
+    <link rel="icon" type="image/png" href="logo.png">
 </head>
 <body>
 
     <nav class="glass-nav">
-        <div class="logo">PORTFOLIO.</div>
+        <div class="logo">
+        <img src="logo.png" alt="Logo Portfolio" class="logo-img">
+        <span>PORTFOLIO.</span>
+    </div>
         <ul class="nav-links">
             <li><a href="#hero">Accueil</a></li>
             <li><a href="#about">À propos</a></li>
