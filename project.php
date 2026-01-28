@@ -1,11 +1,9 @@
 <?php
 require_once 'data/projects.php';
 
-// Vérification de l'ID
 $project_id = $_GET['id'] ?? null;
 $project = $projects[$project_id] ?? null;
 
-// Si le projet n'existe pas, retour à l'accueil
 if (!$project) {
     header("Location: index.php");
     exit();
@@ -20,66 +18,106 @@ if (!$project) {
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+    
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/img/logo.png">
 </head>
 <body class="project-page">
 
     <nav class="glass-nav">
-        <a href="index.php" class="logo">
+        <a href="index.php#projects" class="logo">
             <i class="fa-solid fa-arrow-left"></i>
-            <span>Retour</span>
+            <span>Retour aux projets</span>
         </a>
     </nav>
 
     <header class="project-header reveal" style="--project-color: <?php echo $project['color']; ?>;">
-        <div class="container">
-            <span class="category-badge"><?php echo strtoupper($project['category']); ?></span>
-            <h1><?php echo $project['title']; ?></h1>
-            <p class="subtitle"><?php echo $project['subtitle']; ?></p>
-            
-            <div class="header-actions">
-                <a href="<?php echo $project['github_link']; ?>" target="_blank" class="btn-primary">
-                    <i class="fa-brands fa-github"></i> Voir le code
-                </a>
+        <div class="container header-grid">
+            <div class="header-content">
+                <span class="category-badge"><?php echo strtoupper($project['category']); ?></span>
+                <h1><?php echo $project['title']; ?></h1>
+                <p class="subtitle"><?php echo $project['subtitle']; ?></p>
+                <div class="header-actions">
+                    <a href="<?php echo $project['github_link']; ?>" target="_blank" class="btn-primary">
+                        <i class="fa-brands fa-github"></i> Voir le code source
+                    </a>
+                </div>
+            </div>
+            <div class="header-visual">
+                <div class="visual-wrapper">
+                    <img src="<?php echo $project['main_image']; ?>" alt="Aperçu du projet">
+                    <div class="visual-glow"></div>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="container project-content">
         
-        <div class="project-gallery reveal delay-100">
-            <?php foreach($project['gallery'] as $img): ?>
-                <div class="gallery-item">
-                    <img src="<?php echo $img; ?>" alt="Capture écran" class="placeholder-img">
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-        <div class="project-grid-details reveal delay-200">
+        <div class="project-grid-details reveal delay-100">
+            
             <div class="details-left">
-                <h2>À propos du projet</h2>
-                <div class="text-content">
-                    <p class="lead"><?php echo $project['summary']; ?></p>
-                    <p><?php echo $project['description']; ?></p>
+                <section class="mb-5">
+                    <h2>À propos du projet</h2>
+                    <div class="text-content">
+                        <p class="lead"><?php echo $project['summary']; ?></p>
+                        <p><?php echo $project['description']; ?></p>
                     </div>
+                </section>
+
+                <section class="gallery-section">
+                    <div class="gallery-header">
+                        <h2><i class="fa-regular fa-images"></i> Galerie</h2>
+                    </div>
+
+                    <section id="image-carousel" class="splide" aria-label="Galerie du projet">
+                        <div class="splide__track">
+                            <ul class="splide__list">
+                                <?php foreach($project['gallery'] as $img): ?>
+                                    <li class="splide__slide">
+                                        <a href="<?php echo $img; ?>" class="glightbox" data-gallery="project-gallery">
+                                            <img src="<?php echo $img; ?>" alt="Capture projet" loading="lazy" />
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </section>
+                    
+                </section>
             </div>
 
             <div class="details-right">
-                <div class="tech-box">
-                    <h3>Technologies</h3>
-                    <div class="tech-list">
-                        <?php foreach($project['tech_stack'] as $tech): ?>
-                            <span class="tech-pill"><?php echo $tech; ?></span>
-                        <?php endforeach; ?>
+                <div class="tech-box sticky-box">
+                    <div class="tech-section">
+                        <h3><i class="fa-solid fa-code"></i> Langages</h3>
+                        <div class="tech-list">
+                            <?php foreach($project['languages'] as $lang): ?>
+                                <span class="tech-pill lang"><?php echo $lang; ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="tech-section">
+                        <h3><i class="fa-solid fa-toolbox"></i> Logiciels & Outils</h3>
+                        <div class="tech-list">
+                            <?php foreach($project['tools'] as $tool): ?>
+                                <span class="tech-pill tool"><?php echo $tool; ?></span>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="tech-section">
+                        <h3><i class="fa-regular fa-calendar"></i> Contexte</h3>
+                        <p class="context-text">Projet Universitaire <br> IUT Paul Sabatier - 2024</p>
                     </div>
                 </div>
-                
-                <div class="tech-box">
-                    <h3>Contexte</h3>
-                    <p>Projet Universitaire <br> 2024</p>
-                </div>
             </div>
+
         </div>
 
     </main>
@@ -89,5 +127,38 @@ if (!$project) {
     </footer>
 
     <script src="assets/js/script.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+    
+   <script>
+        // Initialisation de Splide (Beaucoup plus simple que Swiper)
+        document.addEventListener( 'DOMContentLoaded', function() {
+            var splide = new Splide( '#image-carousel', {
+                type   : 'loop',       // Boucle infinie
+                perPage: 1,            // 1 image par défaut
+                gap    : '20px',       // Espace
+                autoplay: false,       // Pas de mouvement auto
+                pagination: true,      // Points en bas
+                arrows: true,          // Flèches
+                breakpoints: {
+                    768: {
+                        perPage: 1,    // Mobile
+                    },
+                    1024: {
+                        perPage: 2,    // PC (2 images côte à côte si tu veux, sinon laisse 1)
+                    }
+                }
+            } );
+            splide.mount();
+        });
+
+        // GLightbox (Zoom)
+        const lightbox = GLightbox({
+            touchNavigation: true,
+            loop: true,
+            autoplayVideos: false
+        });
+    </script>
 </body>
 </html>

@@ -126,4 +126,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, { threshold: 0.1 });
     document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+    // --- GESTION DU MENU MOBILE ---
+    const burgerMenu = document.getElementById('burger-menu');
+    const navLinks = document.getElementById('nav-links');
+
+    if (burgerMenu && navLinks) {
+        burgerMenu.addEventListener('click', () => {
+            // Bascule l'état ouvert/fermé
+            navLinks.classList.toggle('active');
+            burgerMenu.classList.toggle('open');
+        });
+
+        // Fermer le menu quand on clique sur un lien
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                burgerMenu.classList.remove('open');
+            });
+        });
+    }
 });

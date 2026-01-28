@@ -71,7 +71,7 @@ section { padding: 100px 0; }
 .filter-btn { padding: 0.6rem 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-light); border-radius: 50px; color: var(--text-muted); font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease; font-family: var(--font-main); }
 .filter-btn:hover, .filter-btn.active { background: var(--accent); color: var(--bg-color); border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1); }
 
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+.projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
 
 .project-card-simple {
     background: var(--card-bg);
@@ -126,18 +126,94 @@ section { padding: 100px 0; }
 
 /* --- PAGE DETAIL PROJET (project.php) --- */
 .project-header {
-    padding-top: 120px; padding-bottom: 60px;
+    padding-top: 140px; /* Un peu plus d'espace en haut */
+    padding-bottom: 80px;
     background: radial-gradient(circle at top right, rgba(255,255,255,0.03), transparent 70%);
     border-bottom: 1px solid var(--border-light);
+    overflow: hidden; /* Important pour les effets de lumière */
 }
-.category-badge {
-    color: var(--project-color); border: 1px solid var(--project-color);
-    padding: 5px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;
-}
-.project-header h1 { font-size: 3rem; margin: 15px 0; }
-.header-actions { margin-top: 2rem; }
 
-.project-content { padding-top: 50px; padding-bottom: 50px; }
+/* Grille 2 colonnes pour le header */
+.header-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr; /* Texte un peu plus large que l'image */
+    align-items: center;
+    gap: 4rem;
+}
+
+.category-badge {
+    color: var(--project-color);
+    border: 1px solid var(--project-color);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 15px -5px var(--project-color); /* Petite lueur */
+}
+
+.project-header h1 {
+    font-size: clamp(2.5rem, 4vw, 3.5rem); /* Taille adaptative */
+    margin: 10px 0 15px 0;
+    line-height: 1.1;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+.header-actions { margin-top: 2.5rem; }
+
+/* --- VISUEL IMAGE HEADER (Effet 3D) --- */
+.header-visual {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.visual-wrapper {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden; /* Garde l'image dans les bords arrondis */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5); /* Ombre portée */
+    
+    /* Effet 3D subtil */
+    transform: perspective(1000px) rotateY(-10deg) rotateX(2deg);
+    transition: transform 0.5s ease;
+    background: var(--card-bg);
+}
+
+/* Animation au survol : l'image se redresse */
+.header-visual:hover .visual-wrapper {
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg);
+}
+
+.visual-wrapper img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Lueur colorée derrière l'image */
+.visual-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%; height: 120%;
+    background: var(--project-color);
+    filter: blur(80px);
+    opacity: 0.15; /* Lueur discrète */
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* --- RESTE DU CONTENU --- */
+.project-content { padding-top: 60px; padding-bottom: 50px; }
 
 .project-gallery { margin-bottom: 3rem; display: grid; gap: 20px; }
 .project-gallery img { width: 100%; border-radius: 12px; border: 1px solid var(--border-light); max-height: 500px; object-fit: cover; }
@@ -201,4 +277,170 @@ section { padding: 100px 0; }
     .hero-image { order: -1; height: 300px; } 
     .nav-links { display: none; } 
     .details-right { margin-top: 2rem; }
+}
+
+/* Responsive Header */
+@media (max-width: 900px) {
+    .header-grid {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile/tablette */
+        text-align: center;
+        gap: 3rem;
+    }
+    
+    .header-visual {
+        order: -1; /* L'image passe AU-DESSUS du texte sur mobile */
+        margin-bottom: 1rem;
+    }
+    
+    .visual-wrapper {
+        transform: none; /* Pas de 3D sur mobile pour la lisibilité */
+        max-width: 80%; /* Image un peu plus petite */
+    }
+    
+    .header-actions { justify-content: center; }
+}
+
+/* Responsive pour la grille des projets */
+@media (max-width: 1024px) { 
+    .projects-grid { 
+        /* Sur tablette/petit écran : 2 colonnes */
+        grid-template-columns: repeat(2, 1fr); 
+    } 
+}
+
+@media (max-width: 768px) { 
+    .projects-grid { 
+        /* Sur mobile : 1 colonne (là c'est normal que ça prenne toute la largeur) */
+        grid-template-columns: 1fr; 
+    } 
+}
+
+/* --- SWIPER GALLERY (VERSION FIXE SANS ZOOM) --- */
+
+.gallery-section {
+    margin-top: 3rem;
+}
+
+.gallery-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+/* --- SPLIDE GALLERY STYLES (Nouvelle Lib) --- */
+
+.gallery-section {
+    margin-top: 3rem;
+}
+
+.gallery-header {
+    margin-bottom: 1.5rem;
+}
+
+/* Style de la slide (La boîte noire) */
+.splide__slide {
+    height: 350px; /* Hauteur fixe */
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style de l'image (Contrainte stricte) */
+.splide__slide img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain; /* L'image ne sera jamais coupée */
+    display: block;
+}
+
+/* Personnalisation des points de pagination Splide */
+.splide__pagination__page {
+    background: var(--text-muted);
+    opacity: 0.5;
+}
+
+.splide__pagination__page.is-active {
+    background: var(--accent);
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .splide__slide {
+        height: 250px;
+    }
+}
+
+/* --- MENU MOBILE (HAMBURGER) --- */
+
+/* Par défaut (PC), on cache le bouton burger */
+.burger-menu {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 1001; /* Au-dessus du menu */
+}
+
+.burger-menu span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-main);
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+/* RESPONSIVE (Tablettes & Mobiles) */
+@media (max-width: 768px) {
+    
+    /* 1. Afficher le bouton burger */
+    .burger-menu {
+        display: flex;
+    }
+
+    /* 2. Transformer la liste des liens en panneau mobile */
+    .nav-links {
+        display: flex; /* On réactive le display (il était 'none') */
+        position: fixed;
+        top: 0;
+        right: -100%; /* Caché hors de l'écran par défaut */
+        width: 100%;
+        height: 100vh;
+        background: rgba(13, 13, 13, 0.95); /* Fond sombre quasi opaque */
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        transition: right 0.4s ease-in-out; /* Animation fluide */
+        z-index: 1000;
+    }
+
+    /* Classe active pour ouvrir le menu */
+    .nav-links.active {
+        right: 0; /* On le ramène sur l'écran */
+    }
+
+    .nav-links li a {
+        font-size: 1.5rem; /* Liens plus gros sur mobile */
+    }
+
+    /* Animation du Burger en Croix quand ouvert */
+    .burger-menu.open span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 6px);
+    }
+    .burger-menu.open span:nth-child(2) {
+        opacity: 0;
+    }
+    .burger-menu.open span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -6px);
+    }
 }
