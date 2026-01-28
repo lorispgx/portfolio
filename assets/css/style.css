@@ -275,3 +275,61 @@ section { padding: 100px 0; }
         height: 250px;
     }
 }
+
+/* --- STYLE COMPETENCES (Carte Projet) --- */
+.competency-card {
+    background: linear-gradient(145deg, #1a1a1a, #111);
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--project-color, var(--accent)); /* Bordure gauche colorée */
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+}
+
+.comp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.comp-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
+.comp-level {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--accent);
+    border: 1px solid var(--border-light);
+}
+
+.comp-desc {
+    font-style: italic;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.comp-list {
+    list-style: none;
+    padding: 0;
+}
+
+.comp-list li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.comp-list li i {
+    color: var(--project-color, #4ade80); /* Coche verte ou couleur du projet */
+    margin-top: 5px;
+}

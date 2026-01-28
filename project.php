@@ -1,5 +1,6 @@
 <?php
 require_once 'data/projects.php';
+require_once 'data/competencies.php'; // IMPORT DU NOUVEAU FICHIER
 
 $project_id = $_GET['id'] ?? null;
 $project = $projects[$project_id] ?? null;
@@ -9,7 +10,10 @@ if (!$project) {
     exit();
 }
 
-// On compte les images avant d'afficher
+// Récupération de la compétence liée
+$compKey = $project['competency_id'] ?? null;
+$competency = $competencies[$compKey] ?? null;
+
 $nbImages = count($project['gallery']);
 ?>
 <!DOCTYPE html>
@@ -21,10 +25,8 @@ $nbImages = count($project['gallery']);
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
-    
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="icon" type="image/png" href="assets/img/logo.png">
 </head>
@@ -71,6 +73,24 @@ $nbImages = count($project['gallery']);
                     </div>
                 </section>
 
+                <?php if ($competency): ?>
+                <section class="mb-5 competency-section">
+                    <h2><i class="fa-solid fa-medal"></i> Compétence Validée</h2>
+                    <div class="competency-card">
+                        <div class="comp-header">
+                            <h3><?php echo $competency['title']; ?></h3>
+                            <span class="comp-level"><?php echo $competency['level']; ?></span>
+                        </div>
+                        <p class="comp-desc"><?php echo $competency['description']; ?></p>
+                        <ul class="comp-list">
+                            <?php foreach($competency['skills'] as $skill): ?>
+                                <li><i class="fa-solid fa-check"></i> <?php echo $skill; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </section>
+                <?php endif; ?>
+
                 <section class="gallery-section">
                     <div class="gallery-header">
                         <h2><i class="fa-regular fa-images"></i> Galerie</h2>
@@ -90,7 +110,6 @@ $nbImages = count($project['gallery']);
                                 </ul>
                             </div>
                         </section>
-                    
                     <?php elseif ($nbImages === 1): ?>
                         <div class="single-gallery-item">
                             <a href="<?php echo $project['gallery'][0]; ?>" class="glightbox" data-gallery="project-gallery">
@@ -98,7 +117,6 @@ $nbImages = count($project['gallery']);
                             </a>
                         </div>
                     <?php endif; ?>
-                    
                 </section>
             </div>
 
@@ -143,9 +161,7 @@ $nbImages = count($project['gallery']);
     
    <script>
         document.addEventListener( 'DOMContentLoaded', function() {
-            // On vérifie si le carrousel existe (donc si > 1 image) avant de le lancer
             var carouselElement = document.getElementById('image-carousel');
-            
             if (carouselElement) {
                 var splide = new Splide( '#image-carousel', {
                     type   : 'loop',
@@ -154,21 +170,12 @@ $nbImages = count($project['gallery']);
                     autoplay: false,
                     pagination: true,
                     arrows: true,
-                    breakpoints: {
-                        768: { perPage: 1 },
-                        1024: { perPage: 2 }
-                    }
+                    breakpoints: { 768: { perPage: 1 }, 1024: { perPage: 2 } }
                 } );
                 splide.mount();
             }
         });
-
-        // Le zoom (Lightbox) marche toujours, qu'il y ait 1 ou plusieurs images
-        const lightbox = GLightbox({
-            touchNavigation: true,
-            loop: true,
-            autoplayVideos: false
-        });
+        const lightbox = GLightbox({ touchNavigation: true, loop: true, autoplayVideos: false });
     </script>
 </body>
 </html>

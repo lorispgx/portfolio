@@ -7,6 +7,8 @@ $projects = [
         'subtitle' => 'Application Desktop JavaFX',
         'category' => 'java', 
         'tags_filter' => 'java javafx mysql mvc',
+
+        'competency_id' => 'app-complex', // Lien vers la compétence S4
         
         'languages' => ['Java', 'SQL'],
         'tools' => ['Eclipse', 'MySQL Workbench', 'Git'],
@@ -25,6 +27,8 @@ $projects = [
         'subtitle' => 'Dashboard Web Interactif',
         'category' => 'js',
         'tags_filter' => 'js javascript php html css api json chartjs',
+
+        'competency_id' => 'web-data', // Lien vers la compétence Web/Data        
         
         'languages' => ['PHP', 'JavaScript', 'HTML5', 'CSS3'],
         'tools' => ['Chart.js', 'Visual Studio Code'],
@@ -43,6 +47,8 @@ $projects = [
         'subtitle' => 'Pathfinding & Graphes',
         'category' => 'python',
         'tags_filter' => 'python algo terminal',
+
+        'competency_id' => 'algo-opti', // Lien vers la compétence S5 (Optimiser)
         
         'languages' => ['Python'],
         'tools' => ['Visual Studio Code', 'Git', 'Terminal'],
