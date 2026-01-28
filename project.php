@@ -1,6 +1,7 @@
 <?php
 require_once 'data/projects.php';
-require_once 'data/competencies.php'; // IMPORT DU NOUVEAU FICHIER
+// On charge le nouveau fichier de compétences
+require_once 'data/competencies.php';
 
 $project_id = $_GET['id'] ?? null;
 $project = $projects[$project_id] ?? null;
@@ -14,6 +15,7 @@ if (!$project) {
 $compKey = $project['competency_id'] ?? null;
 $competency = $competencies[$compKey] ?? null;
 
+// Comptage des images
 $nbImages = count($project['gallery']);
 ?>
 <!DOCTYPE html>
@@ -110,13 +112,21 @@ $nbImages = count($project['gallery']);
                                 </ul>
                             </div>
                         </section>
+                    
                     <?php elseif ($nbImages === 1): ?>
                         <div class="single-gallery-item">
                             <a href="<?php echo $project['gallery'][0]; ?>" class="glightbox" data-gallery="project-gallery">
                                 <img src="<?php echo $project['gallery'][0]; ?>" alt="Capture projet" loading="lazy" />
                             </a>
                         </div>
+
+                    <?php else: ?>
+                        <div class="no-gallery">
+                            <i class="fa-regular fa-image-slash"></i>
+                            <p>Pas de photos disponibles pour ce projet.</p>
+                        </div>
                     <?php endif; ?>
+                    
                 </section>
             </div>
 
