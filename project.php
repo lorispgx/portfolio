@@ -11,11 +11,9 @@ if (!$project) {
     exit();
 }
 
-// Récupération de la compétence liée
 $compKey = $project['competency_id'] ?? null;
 $competency = $competencies[$compKey] ?? null;
 
-// Comptage des images
 $nbImages = count($project['gallery']);
 ?>
 <!DOCTYPE html>
