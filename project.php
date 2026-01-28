@@ -8,6 +8,9 @@ if (!$project) {
     header("Location: index.php");
     exit();
 }
+
+// On compte les images avant d'afficher
+$nbImages = count($project['gallery']);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -20,7 +23,6 @@ if (!$project) {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
     
     <link rel="stylesheet" href="assets/css/style.css">
@@ -74,19 +76,28 @@ if (!$project) {
                         <h2><i class="fa-regular fa-images"></i> Galerie</h2>
                     </div>
 
-                    <section id="image-carousel" class="splide" aria-label="Galerie du projet">
-                        <div class="splide__track">
-                            <ul class="splide__list">
-                                <?php foreach($project['gallery'] as $img): ?>
-                                    <li class="splide__slide">
-                                        <a href="<?php echo $img; ?>" class="glightbox" data-gallery="project-gallery">
-                                            <img src="<?php echo $img; ?>" alt="Capture projet" loading="lazy" />
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
+                    <?php if ($nbImages > 1): ?>
+                        <section id="image-carousel" class="splide" aria-label="Galerie du projet">
+                            <div class="splide__track">
+                                <ul class="splide__list">
+                                    <?php foreach($project['gallery'] as $img): ?>
+                                        <li class="splide__slide">
+                                            <a href="<?php echo $img; ?>" class="glightbox" data-gallery="project-gallery">
+                                                <img src="<?php echo $img; ?>" alt="Capture projet" loading="lazy" />
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        </section>
+                    
+                    <?php elseif ($nbImages === 1): ?>
+                        <div class="single-gallery-item">
+                            <a href="<?php echo $project['gallery'][0]; ?>" class="glightbox" data-gallery="project-gallery">
+                                <img src="<?php echo $project['gallery'][0]; ?>" alt="Capture projet" loading="lazy" />
+                            </a>
                         </div>
-                    </section>
+                    <?php endif; ?>
                     
                 </section>
             </div>
@@ -127,32 +138,32 @@ if (!$project) {
     </footer>
 
     <script src="assets/js/script.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
     
    <script>
         document.addEventListener( 'DOMContentLoaded', function() {
-            var splide = new Splide( '#image-carousel', {
-                type   : 'loop',       
-                perPage: 1,          
-                gap    : '20px',       
-                autoplay: false,       
-                pagination: true,     
-                arrows: true,         
-                breakpoints: {
-                    768: {
-                        perPage: 1,    
-                    },
-                    1024: {
-                        perPage: 2, 
+            // On vérifie si le carrousel existe (donc si > 1 image) avant de le lancer
+            var carouselElement = document.getElementById('image-carousel');
+            
+            if (carouselElement) {
+                var splide = new Splide( '#image-carousel', {
+                    type   : 'loop',
+                    perPage: 1,
+                    gap    : '20px',
+                    autoplay: false,
+                    pagination: true,
+                    arrows: true,
+                    breakpoints: {
+                        768: { perPage: 1 },
+                        1024: { perPage: 2 }
                     }
-                }
-            } );
-            splide.mount();
+                } );
+                splide.mount();
+            }
         });
 
-       
+        // Le zoom (Lightbox) marche toujours, qu'il y ait 1 ou plusieurs images
         const lightbox = GLightbox({
             touchNavigation: true,
             loop: true,
