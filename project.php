@@ -132,28 +132,27 @@ if (!$project) {
     <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
     
    <script>
-        // Initialisation de Splide (Beaucoup plus simple que Swiper)
         document.addEventListener( 'DOMContentLoaded', function() {
             var splide = new Splide( '#image-carousel', {
-                type   : 'loop',       // Boucle infinie
-                perPage: 1,            // 1 image par défaut
-                gap    : '20px',       // Espace
-                autoplay: false,       // Pas de mouvement auto
-                pagination: true,      // Points en bas
-                arrows: true,          // Flèches
+                type   : 'loop',       
+                perPage: 1,          
+                gap    : '20px',       
+                autoplay: false,       
+                pagination: true,     
+                arrows: true,         
                 breakpoints: {
                     768: {
-                        perPage: 1,    // Mobile
+                        perPage: 1,    
                     },
                     1024: {
-                        perPage: 2,    // PC (2 images côte à côte si tu veux, sinon laisse 1)
+                        perPage: 2, 
                     }
                 }
             } );
             splide.mount();
         });
 
-        // GLightbox (Zoom)
+       
         const lightbox = GLightbox({
             touchNavigation: true,
             loop: true,

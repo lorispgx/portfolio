@@ -1,15 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("--> Portfolio chargé. Version Clean.");
+    console.log("--> Portfolio chargé. Version Finale Clean.");
 
+    // --- 1. SÉLECTION DES ÉLÉMENTS DOM ---
     const projectCards = document.querySelectorAll(".project-card-simple");
     const filterBtns = document.querySelectorAll(".filter-btn");
     const dynamicFilterContainer = document.getElementById("dynamic-filter-container");
-
-    // --- TUTORIEL ---
     const tutorialOverlay = document.getElementById("tutorial-overlay");
     const closeTutorialBtn = document.getElementById("close-tutorial");
     const skillsSection = document.querySelector("#skills");
-    
+    const burgerMenu = document.getElementById('burger-menu');
+    const navLinks = document.getElementById('nav-links');
+
+
+    // --- 2. GESTION DU MENU MOBILE ---
+    if (burgerMenu && navLinks) {
+        burgerMenu.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            burgerMenu.classList.toggle('open');
+        });
+
+        // Fermer le menu au clic sur un lien
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                burgerMenu.classList.remove('open');
+            });
+        });
+    }
+
+
+    // --- 3. TUTORIEL (Onboarding) ---
+    // Fermeture manuelle
     if (closeTutorialBtn && tutorialOverlay) {
         closeTutorialBtn.addEventListener("click", () => {
             tutorialOverlay.classList.remove("visible");
@@ -17,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Affichage Scroll sur #skills
+    // Affichage au scroll sur la section Skills
     if (skillsSection && tutorialOverlay) {
         const tutorialObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -30,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tutorialObserver.observe(skillsSection);
     }
 
-    // Affichage Hover sur .skill-card
+    // Affichage au survol d'une carte compétence
     document.querySelectorAll('.skill-card').forEach(card => {
         card.addEventListener('mouseenter', () => {
             const isSeen = localStorage.getItem("portfolio_tutorial_seen");
@@ -38,19 +59,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --- FILTRAGE PROJETS ---
+
+    // --- 4. FILTRAGE DES PROJETS ---
     function filterProjects(filterValue, customLabel = null) {
         projectCards.forEach(card => {
             const cardTechs = card.getAttribute("data-techs"); 
+            // Si "all" ou si le projet contient la techno demandée
             if (filterValue === "all" || (cardTechs && cardTechs.includes(filterValue))) {
-                card.classList.remove("hide"); card.classList.add("show");
+                card.classList.remove("hide"); 
+                card.classList.add("show");
             } else {
-                card.classList.remove("show"); card.classList.add("hide");
+                card.classList.remove("show"); 
+                card.classList.add("hide");
             }
         });
 
+        // Gestion des boutons actifs
         filterBtns.forEach(btn => btn.classList.remove("active"));
         let standardBtnFound = false;
+        
         filterBtns.forEach(btn => {
             if(btn.getAttribute("data-filter") === filterValue) {
                 btn.classList.add("active");
@@ -58,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
+        // Création d'un bouton dynamique si filtre spécial (via Tooltip)
         if (dynamicFilterContainer) {
             if (!standardBtnFound && customLabel && filterValue !== "all") {
                 dynamicFilterContainer.innerHTML = `<button class="filter-btn active dynamic-badge">Filtre : ${customLabel} <i class="fa-solid fa-check"></i></button>`;
@@ -67,9 +95,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Écouteur sur les boutons de filtre standards
     filterBtns.forEach(btn => btn.addEventListener("click", () => filterProjects(btn.getAttribute("data-filter"))));
 
-    // --- TOOLTIP SKILL-TAGS ---
+
+    // --- 5. TOOLTIP INTERACTIF (Skill Tags) ---
     const tooltip = document.createElement('div');
     tooltip.className = 'custom-tooltip';
     document.body.appendChild(tooltip);
@@ -77,17 +107,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function showTooltip(tag) {
         if (closeTimer) clearTimeout(closeTimer);
+        
         const desc = tag.getAttribute('data-desc');
-        if (!desc) return;
+        if (!desc) return; 
 
         const techFilter = tag.getAttribute('data-tech-filter');
         const techLabel = tag.textContent.trim();
+        
         let htmlContent = `<span>${desc}</span>`;
+        // Ajout du bouton "Voir les projets" si un filtre existe
         if (techFilter) {
             htmlContent += `<br><span class="tooltip-action" data-go-filter="${techFilter}" data-label="${techLabel}">Voir les projets <i class="fa-solid fa-arrow-right"></i></span>`;
         }
 
         tooltip.innerHTML = htmlContent;
+        
+        // Positionnement
         const rect = tag.getBoundingClientRect();
         const top = rect.top + window.scrollY - tooltip.offsetHeight - 10;
         const left = rect.left + window.scrollX + (rect.width / 2) - (tooltip.offsetWidth / 2);
@@ -96,54 +131,51 @@ document.addEventListener("DOMContentLoaded", () => {
         tooltip.style.left = `${left}px`;
         tooltip.classList.add('visible');
 
+        // Clic sur "Voir les projets" dans le tooltip
         const actionBtn = tooltip.querySelector('.tooltip-action');
         if(actionBtn) {
             actionBtn.addEventListener('click', (evt) => {
                 evt.stopPropagation();
                 tooltip.classList.remove('visible');
                 document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                // Petit délai pour laisser le scroll se faire
                 setTimeout(() => filterProjects(actionBtn.getAttribute("data-go-filter"), actionBtn.getAttribute("data-label")), 500);
             });
         }
     }
 
+    // Événements sur les tags
     document.querySelectorAll('.skill-tag').forEach(tag => {
-        tag.addEventListener('click', (e) => { e.stopPropagation(); showTooltip(tag); });
-        tag.addEventListener('mouseleave', () => { closeTimer = setTimeout(() => tooltip.classList.remove('visible'), 300); });
+        tag.addEventListener('click', (e) => { 
+            e.stopPropagation(); 
+            showTooltip(tag); 
+        });
+        tag.addEventListener('mouseleave', () => { 
+            closeTimer = setTimeout(() => tooltip.classList.remove('visible'), 300); 
+        });
     });
 
+    // Fermeture si clic ailleurs
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.skill-tag') && !e.target.closest('.custom-tooltip')) tooltip.classList.remove('visible');
+        if (!e.target.closest('.skill-tag') && !e.target.closest('.custom-tooltip')) {
+            tooltip.classList.remove('visible');
+        }
     });
 
+    // Garder ouvert si on survole le tooltip lui-même
     tooltip.addEventListener('mouseenter', () => { if (closeTimer) clearTimeout(closeTimer); });
     tooltip.addEventListener('mouseleave', () => { tooltip.classList.remove('visible'); });
 
-    // --- ANIMATION SCROLL ---
+
+    // --- 6. ANIMATION AU SCROLL (Reveal) ---
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) { entry.target.classList.add("active"); observer.unobserve(entry.target); }
+            if (entry.isIntersecting) { 
+                entry.target.classList.add("active"); 
+                observer.unobserve(entry.target); 
+            }
         });
     }, { threshold: 0.1 });
+    
     document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
-
-    // --- GESTION DU MENU MOBILE ---
-    const burgerMenu = document.getElementById('burger-menu');
-    const navLinks = document.getElementById('nav-links');
-
-    if (burgerMenu && navLinks) {
-        burgerMenu.addEventListener('click', () => {
-            // Bascule l'état ouvert/fermé
-            navLinks.classList.toggle('active');
-            burgerMenu.classList.toggle('open');
-        });
-
-        // Fermer le menu quand on clique sur un lien
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                burgerMenu.classList.remove('open');
-            });
-        });
-    }
 });

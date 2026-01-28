@@ -13,7 +13,7 @@ $projects = [
         
         'summary' => "Application desktop complète pour agence immo avec gestion CRUD et facturation.",
         'description' => "Ce projet a été réalisé dans le cadre de ma formation. L'objectif était de créer une solution robuste pour gérer les biens immobiliers, les locataires et les propriétaires. <br><br> J'ai mis l'accent sur l'architecture MVC pour séparer la logique métier de l'interface utilisateur, ce qui rend l'application facilement maintenable et évolutive.",
-        'main_image' => 'assets/img/gestionlocative.jpg', // Chemin corrigé (racine)
+        'main_image' => 'assets/img/gestionlocative.jpg', 
         'gallery' => [
             'assets/img/projetlocation.png'
         ],
@@ -31,7 +31,7 @@ $projects = [
         
         'summary' => "Interface web interactive connectée transformant des JSON bruts en graphiques.",
         'description' => "Une interface intuitive permettant aux décideurs de visualiser des données complexes. J'ai utilisé Chart.js pour le rendu dynamique et PHP pour le traitement des données en amont via une API.",
-        'main_image' => 'assets/img/dashboarddata.jpg', // Chemin corrigé (racine)
+        'main_image' => 'assets/img/dashboarddata.jpg', 
         'gallery' => [
             'assets/img/projetdata.png'
         ],
@@ -49,7 +49,7 @@ $projects = [
         
         'summary' => "Implémentation d'algorithme complexe pour résoudre des problèmes de chemin.",
         'description' => "Exploration approfondie de l'algorithme A* (A-Star) et Dijkstra pour trouver le chemin le plus court dans un environnement complexe généré aléatoirement.",
-        'main_image' => 'assets/img/research.jpg', // Chemin corrigé (racine)
+        'main_image' => 'assets/img/research.jpg', 
         'gallery' => [
            
         ],
