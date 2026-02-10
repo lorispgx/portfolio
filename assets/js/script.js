@@ -60,12 +60,15 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // --- 4. FILTRAGE DES PROJETS ---
+    // --- 4. FILTRAGE DES PROJETS (CORRIGÉ) ---
     function filterProjects(filterValue, customLabel = null) {
+        const safeFilter = filterValue.toLowerCase();
+
         projectCards.forEach(card => {
-            const cardTechs = card.getAttribute("data-techs"); 
-            // Si "all" ou si le projet contient la techno demandée
-            if (filterValue === "all" || (cardTechs && cardTechs.includes(filterValue))) {
+            const cardCategory = (card.getAttribute("data-category") || "").toLowerCase();
+            const cardTechs = (card.getAttribute("data-techs") || "").toLowerCase();
+            
+            if (safeFilter === "all" || cardCategory === safeFilter || cardTechs.includes(safeFilter)) {
                 card.classList.remove("hide"); 
                 card.classList.add("show");
             } else {
@@ -74,18 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Gestion des boutons actifs
+        // Gestion des boutons actifs (visuel)
         filterBtns.forEach(btn => btn.classList.remove("active"));
         let standardBtnFound = false;
         
         filterBtns.forEach(btn => {
-            if(btn.getAttribute("data-filter") === filterValue) {
+            if(btn.getAttribute("data-filter").toLowerCase() === safeFilter) {
                 btn.classList.add("active");
                 standardBtnFound = true;
             }
         });
 
-        // Création d'un bouton dynamique si filtre spécial (via Tooltip)
         if (dynamicFilterContainer) {
             if (!standardBtnFound && customLabel && filterValue !== "all") {
                 dynamicFilterContainer.innerHTML = `<button class="filter-btn active dynamic-badge">Filtre : ${customLabel} <i class="fa-solid fa-check"></i></button>`;

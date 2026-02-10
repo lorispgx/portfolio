@@ -2,42 +2,75 @@
 // Fichier : data/competencies.php
 
 $competencies = [
-    // 1. Pour "Gestion Locative" (Semestre 4 - Réaliser / Conception)
-    'app-complex' => [
-        'title' => 'Conception et Développement d\'Applications',
-        'level' => 'Niveau Avancé',
-        'description' => "Partir des exigences client et aller jusqu'à une application complète, robuste et maintenable.",
+    // COMPÉTENCE 1 : RÉALISER
+    'realiser' => [
+        'title' => 'Réaliser',
+        'color' => '#f59e0b', // Orange
+        'description' => "Développer des applications informatiques complexes.",
         'skills' => [
-            "Élaborer et implémenter les spécifications fonctionnelles et non fonctionnelles.",
-            "Appliquer des principes d'accessibilité et d'ergonomie.",
-            "Adopter de bonnes pratiques de conception et de programmation.",
-            "Vérifier et valider la qualité de l'application par des tests unitaires et d'intégration."
+            "Concevoir et développer une solution applicative.",
+            "Assurer la maintenance et l'évolution.",
+            "Respecter les normes de codage et de design."
         ]
     ],
 
-    // 2. Pour "Visualisation Data" (Dév Web & Données)
-    'web-data' => [
-        'title' => 'Développement Web & Données',
-        'level' => 'Niveau Intermédiaire',
-        'description' => "Concevoir des interfaces web interactives et organiser la restitution de données complexes.",
+    // COMPÉTENCE 2 : OPTIMISER
+    'optimiser' => [
+        'title' => 'Optimiser',
+        'color' => '#10b981', // Vert
+        'description' => "Optimiser les applications informatiques.",
         'skills' => [
-            "Organiser la restitution de données à travers la programmation et la visualisation.",
-            "Manipuler des données hétérogènes (JSON, API, SQL).",
-            "Sécuriser les services et les données d'un système.",
-            "Développer des interfaces utilisateurs réactives et adaptées."
+            "Analyser les performances d'un algorithme.",
+            "Choisir des structures de données adaptées.",
+            "Améliorer l'efficacité en temps et en mémoire."
         ]
     ],
 
-    // 3. Pour "Algorithme" (Semestre 5 - Optimisation)
-    'algo-opti' => [
-        'title' => 'Optimisation et Analyse Algorithmique',
-        'level' => 'Niveau Expert',
-        'description' => "Analyser et optimiser des applications en fonction de critères spécifiques (temps d'exécution, mémoire, précision).",
+    // COMPÉTENCE 3 : ADMINISTRER
+    'administrer' => [
+        'title' => 'Administrer',
+        'color' => '#6366f1', // Indigo
+        'description' => "Administrer des systèmes informatiques communicants complexes.",
         'skills' => [
-            "Anticiper les résultats de diverses métriques de performance (temps, mémoire, charge).",
-            "Profiler, analyser et justifier le comportement d'un code existant.",
-            "Choisir et utiliser des structures de données complexes adaptées au problème.",
-            "Utiliser des techniques algorithmiques avancées (graphes, recherche opérationnelle)."
+            "Installer et configurer les services réseaux.",
+            "Sécuriser l'infrastructure système.",
+            "Maintenir la continuité de service."
+        ]
+    ],
+
+    // COMPÉTENCE 4 : GÉRER
+    'gerer' => [
+        'title' => 'Gérer',
+        'color' => '#3b82f6', // Bleu
+        'description' => "Gérer des données de l'information.",
+        'skills' => [
+            "Concevoir et gérer des bases de données.",
+            "Exploiter et visualiser les données.",
+            "Assurer la confidentialité et l'intégrité des données."
+        ]
+    ],
+    
+    // COMPÉTENCE 5 : CONDUIRE
+    'conduire' => [
+        'title' => 'Conduire',
+        'color' => '#ec4899', // Rose
+        'description' => "Conduire un projet de développement.",
+        'skills' => [
+            "Identifier les besoins métiers.",
+            "Planifier et suivre les tâches.",
+            "Communiquer avec les parties prenantes."
+        ]
+    ],
+
+    // COMPÉTENCE 6 : COLLABORER
+    'collaborer' => [
+        'title' => 'Collaborer',
+        'color' => '#8b5cf6', // Violet
+        'description' => "Collaborer au sein d'une équipe informatique.",
+        'skills' => [
+            "Travailler efficacement en méthode Agile.",
+            "Partager les connaissances et documenter.",
+            "S'intégrer dans une organisation professionnelle."
         ]
     ]
 ];

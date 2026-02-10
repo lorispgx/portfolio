@@ -1,6 +1,5 @@
 <?php
 require_once 'data/projects.php';
-// On charge le nouveau fichier de compétences
 require_once 'data/competencies.php';
 
 $project_id = $_GET['id'] ?? null;
@@ -79,7 +78,6 @@ $nbImages = count($project['gallery']);
                     <div class="competency-card">
                         <div class="comp-header">
                             <h3><?php echo $competency['title']; ?></h3>
-                            <span class="comp-level"><?php echo $competency['level']; ?></span>
                         </div>
                         <p class="comp-desc"><?php echo $competency['description']; ?></p>
                         <ul class="comp-list">

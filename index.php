@@ -1,7 +1,7 @@
 <?php
 // 1. ON RÉCUPÈRE LES DONNÉES (Assure-toi d'avoir le fichier data/projects.php)
 require_once 'data/projects.php';
-
+require_once 'data/competencies.php';
 // Traitement du formulaire (Code existant)
 $message_sent = false;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -170,22 +170,91 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </section>
 
+    <section id="but-competencies" class="but-section">
+        <div class="container">
+            <h2 class="section-title reveal">Mon Profil BUT Informatique</h2>
+            <p class="section-subtitle reveal delay-100">Les 6 compétences socles de ma formation à l'IUT.</p>
+            
+            <div class="but-grid">
+                <?php 
+                // On s'assure que les données sont chargées
+                if(isset($competencies)): 
+                    foreach($competencies as $key => $comp): 
+                ?>
+                    <div class="but-card reveal" style="--comp-color: <?php echo $comp['color']; ?>;">
+                        <div class="but-icon">
+                            <?php 
+                            $icon = 'fa-code'; // Défaut
+                            if($key == 'realiser') $icon = 'fa-laptop-code';
+                            if($key == 'optimiser') $icon = 'fa-chart-line';
+                            if($key == 'administrer') $icon = 'fa-network-wired';
+                            if($key == 'gerer') $icon = 'fa-database';
+                            if($key == 'conduire') $icon = 'fa-list-check';
+                            if($key == 'collaborer') $icon = 'fa-users';
+                            ?>
+                            <i class="fa-solid <?php echo $icon; ?>"></i>
+                        </div>
+                        <h3><?php echo $comp['title']; ?></h3>
+                        <p><?php echo $comp['description']; ?></p>
+                        
+                        <div class="but-details">
+                            <ul>
+                                <?php foreach(array_slice($comp['skills'], 0, 3) as $skill): ?>
+                                    <li><i class="fa-solid fa-check"></i> <?php echo $skill; ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                <?php 
+                    endforeach; 
+                endif; 
+                ?>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects-section">
+
   <section id="projects" class="projects-section">
         <div class="container">
             <h2 class="section-title reveal">Projets & Réalisations</h2>
             
             <div class="filter-container reveal">
                 <button class="filter-btn active" data-filter="all">Tous</button>
-                <button class="filter-btn" data-filter="java">Java / JavaFX</button>
-                <button class="filter-btn" data-filter="js">JavaScript / Web</button>
-                <button class="filter-btn" data-filter="python">Python / Algo</button>
+                
+                <?php 
+                // 1. On récupère d'abord toutes les catégories utilisées par tes projets
+                $categories_actives = [];
+                if(isset($projects) && !empty($projects)) {
+                    foreach($projects as $p) {
+                        if(isset($p['category'])) {
+                            // On stocke la catégorie en minuscule pour être sûr
+                            $categories_actives[] = strtolower($p['category']);
+                        }
+                    }
+                }
+                // On supprime les doublons
+                $categories_actives = array_unique($categories_actives);
+
+                if(isset($competencies) && !empty($competencies)):
+                    foreach($competencies as $key => $comp):
+                        // La condition magique : Est-ce que cette compétence est utilisée ?
+                        if(in_array(strtolower($key), $categories_actives)):
+                ?>
+                        <button class="filter-btn" data-filter="<?php echo strtolower($key); ?>">
+                            <?php echo $comp['title']; ?>
+                        </button>
+                <?php 
+                        endif;
+                    endforeach;
+                endif; 
+                ?>
+                
                 <span id="dynamic-filter-container"></span>
             </div>
             
             <div class="projects-grid">
-                
                 <?php 
-                // On vérifie si la variable $projects existe (chargée depuis data/projects.php)
                 if(isset($projects) && !empty($projects)): 
                     foreach($projects as $key => $project): 
                 ?>
@@ -193,26 +262,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="project-img-container">
                             <img src="<?php echo $project['main_image']; ?>" alt="<?php echo $project['title']; ?>" class="placeholder-img">
                             <div class="project-overlay">
-                                <span class="btn-discover">Découvrir le projet <i class="fa-solid fa-arrow-right"></i></span>
+                                <span class="btn-discover">Découvrir <i class="fa-solid fa-arrow-right"></i></span>
                             </div>
                         </div>
                         <div class="project-info-mini">
+                            <span style="color: <?php echo $project['color']; ?>; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display:block; margin-bottom:5px;">
+                                <?php echo strtoupper($project['category']); ?>
+                            </span>
+                            
                             <h3><?php echo $project['title']; ?></h3>
                             <p><?php echo $project['subtitle']; ?></p>
-                            <div class="mini-tags">
-                                <?php foreach(array_slice($project['languages'], 0, 3) as $tech): ?>
-                                    <span><?php echo $tech; ?></span>
-                                <?php endforeach; ?>
-                            </div>
                         </div>
                     </a>
                 <?php 
                     endforeach; 
-                else:
+                endif; 
                 ?>
-                    <p style="color:white;">Erreur : Les projets ne sont pas chargés. Vérifiez data/projects.php</p>
-                <?php endif; ?>
-
             </div>
         </div>
     </section>
