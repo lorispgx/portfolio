@@ -286,13 +286,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container small-container">
             <h2 class="section-title reveal">Me contacter</h2>
             
-            <?php if(isset($message_sent) && $message_sent): ?>
-                <div class="success-message reveal">
-                    <h3>Merci !</h3>
+            <?php 
+            // On récupère le status depuis l'URL
+            $status = $_GET['status'] ?? null;
+            ?>
+
+            <?php if ($status == 'success'): ?>
+                
+                <div class="success-box reveal" style="text-align: center; padding: 2rem; border: 1px solid #4ade80; background: rgba(74, 222, 128, 0.1); border-radius: 12px; color: #4ade80;">
+                    <i class="fa-solid fa-check-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <h3>Message envoyé !</h3>
                     <p>Votre message a bien été transmis. Je vous répondrai sous 24h.</p>
+                    <a href="index.php#contact" style="display: inline-block; margin-top: 15px; color: #fff; text-decoration: underline;">Envoyer un autre message</a>
                 </div>
+
             <?php else: ?>
-                <form action="index.php#contact" method="POST" class="contact-form reveal">
+
+                <?php if ($status == 'error'): ?>
+                    <div class="alert-message reveal">
+                        <div class="error-box"><i class="fa-solid fa-triangle-exclamation"></i> Une erreur est survenue lors de l'envoi.</div>
+                    </div>
+                <?php elseif ($status == 'invalid'): ?>
+                    <div class="alert-message reveal">
+                        <div class="error-box"><i class="fa-solid fa-circle-xmark"></i> Veuillez remplir tous les champs correctement.</div>
+                    </div>
+                <?php endif; ?>
+
+                <form action="traitement_contact.php" method="POST" class="contact-form reveal">
+    
                     <div class="form-group">
                         <label for="name">Nom / Entreprise</label>
                         <input type="text" id="name" name="name" required placeholder="Ex: Jean Dupont">
@@ -315,6 +336,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     <button type="submit" class="btn-primary full-width">Envoyer le message</button>
                 </form>
+
             <?php endif; ?>
 
             <div class="footer-links reveal delay-100">
