@@ -1,34 +1,35 @@
 <?php
-// On active l'encodage interne en UTF-8 pour être sûr
+// 1. Configuration de l'encodage (Crucial pour éviter le SPAM)
 mb_internal_encoding("UTF-8");
 
+// On ne traite que les requêtes POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // 1. Récupération des données
+    // 2. Nettoyage des entrées (Sécurité XSS)
     $nom = htmlspecialchars(trim($_POST['name']));
     $email_visiteur = htmlspecialchars(trim($_POST['email']));
     $objet_visiteur = htmlspecialchars(trim($_POST['object']));
     $message = htmlspecialchars(trim($_POST['message']));
 
     // ---------------------------------------------------------
-    // 2. CONFIGURATION ALWAYSDATA
+    // 3. CONFIGURATION ALWAYSDATA
     // ---------------------------------------------------------
     
-    // Ton adresse perso (réception)
+    // Ton adresse personnelle (réception)
     $email_reception = "lorispigneaux@gmail.com"; 
 
-    // L'adresse serveur Alwaysdata (Expéditeur technique)
-    // REMPLACE 'loris' PAR TON NOM D'UTILISATEUR EXACT ALWAYSDATA
-    $email_serveur = "loris@alwaysdata.net"; 
+    // L'adresse technique du serveur Alwaysdata (Expéditeur)
+    $email_serveur = "lorispigneaux@alwaysdata.net"; 
 
     // ---------------------------------------------------------
 
+    // Vérification que les champs ne sont pas vides
     if (!empty($nom) && !empty($email_visiteur) && !empty($message)) {
         
-        // SUJET : On le nettoie pour éviter les caractères bizarres
+        // Construction du Sujet
         $sujet = "[Portfolio] " . $objet_visiteur;
 
-        // CONTENU DU MAIL
+        // Construction du Corps du message
         $contenu = "Nouveau message reçu depuis le site.\n\n";
         $contenu .= "Nom : $nom\n";
         $contenu .= "Email : $email_visiteur\n";
@@ -37,40 +38,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $contenu .= "Message :\n$message\n";
 
         // ---------------------------------------------------------
-        // 3. LES HEADERS TECHNIQUES (C'est là qu'on corrige le bug)
+        // 4. EN-TÊTES TECHNIQUES (MIME & HEADERS)
         // ---------------------------------------------------------
         
-        $headers = []; // On utilise un tableau pour être plus propre
+        $headers = [];
         
-        // A. Version MIME et Type de contenu (Corrige R_MISSING_CHARSET et BROKEN_CONTENT_TYPE)
+        // Standards MIME pour dire que c'est du texte propre en UTF-8
         $headers[] = "MIME-Version: 1.0";
         $headers[] = "Content-Type: text/plain; charset=UTF-8";
-        
-        // B. Encodage (Corrige R_BAD_CTE_7BIT - Le fameux +3.5 points)
-        $headers[] = "Content-Transfer-Encoding: 8bit";
+        $headers[] = "Content-Transfer-Encoding: 8bit"; // Évite le score "Bad CTE"
 
-        // C. Expéditeur
-        $headers[] = "From: Portfolio <$email_serveur>"; // Ajout d'un nom "Portfolio" pour faire plus propre
-        $headers[] = "Reply-To: $email_visiteur";
+        // Identité de l'expéditeur
+        $headers[] = "From: Portfolio <$email_serveur>";
+        $headers[] = "Reply-To: $email_visiteur"; // Pour répondre au visiteur
         $headers[] = "Sender: $email_serveur";
         $headers[] = "X-Mailer: PHP/" . phpversion();
 
-        // On transforme le tableau en chaîne de caractères
+        // Conversion du tableau en chaîne de caractères
         $headers_str = implode("\r\n", $headers);
 
-        // 4. Envoi
+        // 5. Envoi du mail
         if (mail($email_reception, $sujet, $contenu, $headers_str)) {
+            // Succès
             header("Location: index.php?status=success#contact");
             exit();
         } else {
+            // Erreur serveur
             header("Location: index.php?status=error#contact");
             exit();
         }
     } else {
+        // Champs invalides
         header("Location: index.php?status=invalid#contact");
         exit();
     }
 } else {
+    // Accès direct interdit
     header("Location: index.php");
     exit();
 }

@@ -287,7 +287,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h2 class="section-title reveal">Me contacter</h2>
             
             <?php 
-            // On récupère le status depuis l'URL
             $status = $_GET['status'] ?? null;
             ?>
 
